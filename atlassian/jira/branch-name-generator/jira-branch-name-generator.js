@@ -1,14 +1,12 @@
 // ==UserScript==
 // @name        JIRA branch name generator
 // @namespace   https://l0nax.io
-// @version     0.2.1
+// @version     0.3.0
 // @match       https://www.fabmation.info/jira/*
 // @author      Francesco Emanuel Bennici <benniciemanuel78@gmail.com>
 // @require     http://code.jquery.com/jquery-latest.js
 // @require     https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js
-//
-// @updateURL https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
 //
 // @updateURL   https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
 // @downloadURL https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
@@ -37,27 +35,27 @@ GM_addStyle(`
 
 GM_addStyle(`
 .create-branch-btn {
-    padding: 0 1em;
-    margin: 0 1em;
+    padding: 0 9px 0 9px;
+    margin: 0 0 5px 0;
     cursor: pointer;
     -webkit-box-align: baseline;
     align-items: baseline;
     box-sizing: border-box;
     display: inline-flex;
-    font-size: inherit;
-    font-style: normal;
-    font-weight: normal;
+    font-size: small;
+    font-style: 200;
+    font-weight: 200;
     max-width: 100%;
     text-align: center;
     white-space: nowrap;
-    height: auto;
+    height: 25px;
     line-height: inherit;
     vertical-align: baseline;
     width: auto;
     color: rgb(80, 95, 121) !important;
     border-width: 0px;
     text-decoration: none;
-    background: rgba(9, 30, 66, 0.04);
+    background: #e6e6e6;
     border-radius: 3px;
     transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
     outline: none !important;
@@ -98,16 +96,14 @@ GM_addStyle(`
         document.execCommand("copy");
     }
 
-    $(lastBreadcrumb).append(`
-            <div class="copy-branch-btn-wrapper">
-               <input type="button" class="create-branch-btn" value="Copy branch name" id="create-branch-name">
-               <textarea style="opacity: 0" id="copy-branch-name">
-            </div>
+    $(lastBreadcrumb).after(`
+                <input type="button" class="create-branch-btn" value="Copy branch name 📋" id="create-branch-name">
+                <textarea style="opacity: 0" id="copy-branch-name"></textarea>
     `);
 
     $('#create-branch-name').on('click', () => {
         createBranchName();
-        $(".copy-branch-btn-wrapper").append(`<span id="copied-txt" style="position: absolute; top: 0; left: 60%; color: green;">Copied</span>`);
+        $(".create-branch-name").append(`<span id="copied-txt" style="position: absolute; top: 0; left: 60%; color: green;">Copied</span>`);
         setTimeout(() => $('#copied-txt').remove(), 3000)
     })
 })();
