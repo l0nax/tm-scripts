@@ -5,95 +5,111 @@
 // @match       https://www.fabmation.info/jira/*
 // @author      Francesco Emanuel Bennici <benniciemanuel78@gmail.com>
 // @require     http://code.jquery.com/jquery-latest.js
-// @require     https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js
 //
 // @updateURL   https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
 // @downloadURL https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
 //
 // @grant       GM_addStyle
+// @grant       GM_setClipboard
 // ==/UserScript==
-
-function GM_addStyle(css) {
-  const style = document.getElementById("GM_addStyleBy8626") || (function() {
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.id = "GM_addStyleBy8626";
-    document.head.appendChild(style);
-    return style;
-  })();
-  const sheet = style.sheet;
-  sheet.insertRule(css, (sheet.rules || sheet.cssRules || []).length);
-}
 
 GM_addStyle(`
 .copy-branch-btn-wrapper {
     display: flex;
     position: relative;
 }
-`);
 
-GM_addStyle(`
 .create-branch-btn {
-    padding: 0 9px 0 9px;
-    margin: 0 0 5px 0;
-    cursor: pointer;
-    -webkit-box-align: baseline;
-    align-items: baseline;
     box-sizing: border-box;
-    display: inline-flex;
-    font-size: small;
-    font-style: 200;
-    font-weight: 200;
-    max-width: 100%;
-    text-align: center;
-    white-space: nowrap;
-    height: 25px;
-    line-height: inherit;
-    vertical-align: baseline;
-    width: auto;
-    color: rgb(80, 95, 121) !important;
-    border-width: 0px;
+    transition: background-color .1s ease-out;
+    border-radius: 3.01px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-variant: normal;
+    font-weight: 400;
+    background-image: none;
+    background-color: rgba(9,30,66,.08);
+    border: 1px solid transparent;
+    color: #344563;
     text-decoration: none;
-    background: #e6e6e6;
-    border-radius: 3px;
-    transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
-    outline: none !important;
-    position: relavent;
-}`);
+    display: inline-block;
+    height: 2.14285714em;
+    line-height: 1.42857143em;
+    margin: 0;
+    padding: 4px 10px;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
 
-GM_addStyle(`
 .create-branch-btn:hover {
     color: rgb(23, 43, 77) !important;
     background: rgb(223, 225, 230) !important;
 }
-`);
 
-GM_addStyle(`
 .create-branch-btn:active, .create-branch-btn:focus {
     color: rgb(0, 82, 204) !important;
     background: rgba(179, 212, 255, 0.6);
+}
+
+#jbng-toast {
+  visibility: hidden;
+  margin-left: -125px;
+  background-color: #169c16;
+  color: #000;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#jbng-toast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }
 `);
 
 (function() {
     'use strict';
-    //const lastBreadcrumb = _.last(document.querySelectorAll('//*[@id="key-val"]'));
     const lastBreadcrumb = _.last(document.querySelectorAll('a[id*="key-val"]'));
 
+    const kebabCase = (str) => {
+        return string.replace(/([a-z])([A-Z])/g, "$1-$2")
+                     .replace(/\s+/g, '-')
+                     .toLowerCase();
+    }
+
     function createBranchName(){
-        //const jiraTitle = _.first(document.querySelectorAll('h1')).innerText
         const jiraTitle = document.querySelectorAll('h1')[2].innerText
         const jiraId = lastBreadcrumb.innerText
 
-        copy(`${jiraId}_${_.kebabCase(jiraTitle)}`);
-    }
-
-    function copy(value) {
-        const copyText = document.querySelector("#copy-branch-name");
-        copyText.value = value;
-        copyText.select();
-        document.execCommand("copy");
+        GM_setClipboard(`${jiraId}_${_.kebabCase(jiraTitle)}`, "text");
     }
 
     $(lastBreadcrumb).after(`
@@ -101,9 +117,16 @@ GM_addStyle(`
                 <textarea style="opacity: 0" id="copy-branch-name"></textarea>
     `);
 
+    $(`<div id="jbng-toast">Copied</div>`).appendTo("body");
+
     $('#create-branch-name').on('click', () => {
         createBranchName();
         $(".create-branch-name").append(`<span id="copied-txt" style="position: absolute; top: 0; left: 60%; color: green;">Copied</span>`);
         setTimeout(() => $('#copied-txt').remove(), 3000)
+
+        // show notification toast and hide it after 3s
+        var toast = document.getElementById("jbng-toast");
+        toast.className = "show";
+        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 1500);
     })
 })();
