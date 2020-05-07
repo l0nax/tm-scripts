@@ -7,7 +7,7 @@
 // @require https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js
 //
-// @updateURL https://gist.githubusercontent.com/l0nax/d876a632f02a881d0deb03cc3af17abc/raw/37bc45980937f594d11ee85fe6a26f23390f115d/jira-branch-name-generator.js
+// @updateURL https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
 //
 // @grant          GM_addStyle
 // ==/UserScript==
