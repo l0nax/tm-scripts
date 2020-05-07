@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        JIRA branch name generator
+// @name        JIRA branch name copier
 // @namespace   https://l0nax.io
 // @version     0.3.0
 // @match       https://www.fabmation.info/jira/*
