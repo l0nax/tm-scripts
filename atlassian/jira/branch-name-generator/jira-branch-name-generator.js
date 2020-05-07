@@ -114,15 +114,13 @@ GM_addStyle(`
 
     $(lastBreadcrumb).after(`
                 <input type="button" class="create-branch-btn" value="Copy branch name 📋" id="create-branch-name">
-                <textarea style="opacity: 0" id="copy-branch-name"></textarea>
     `);
 
     $(`<div id="jbng-toast">Copied</div>`).appendTo("body");
 
     $('#create-branch-name').on('click', () => {
+            // copy branch name to clipboard
         createBranchName();
-        $(".create-branch-name").append(`<span id="copied-txt" style="position: absolute; top: 0; left: 60%; color: green;">Copied</span>`);
-        setTimeout(() => $('#copied-txt').remove(), 3000)
 
         // show notification toast and hide it after 3s
         var toast = document.getElementById("jbng-toast");
