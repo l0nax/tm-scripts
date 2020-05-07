@@ -3,16 +3,24 @@
 // @namespace   https://l0nax.io
 // @version     0.3.0
 // @match       https://www.fabmation.info/jira/*
-// @author      Francesco Emanuel Bennici <benniciemanuel78@gmail.com>
-// @require     http://code.jquery.com/jquery-latest.js
+// @author      l0nax
+// @copyright   2020, Francesco Emanuel Bennici <benniciemanuel78@gmail.com>
+// @license     MIT
+// @description Convert the Jira Issue ID + Title into an usable branch name and put it into the clipboard.
+//
+// @require     https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js
 //
-// @updateURL   https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
-// @downloadURL https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
+// @updateURL   https://openuserjs.org/meta/l0nax/JIRA_branch_name_copier.meta.js
+// @downloadURL https://openuserjs.org/install/l0nax/JIRA_branch_name_copier.user.js
 //
 // @grant       GM_addStyle
 // @grant       GM_setClipboard
 // ==/UserScript==
+
+// ==OpenUserJS==
+// @author l0nax
+// ==/OpenUserJS==
 
 GM_addStyle(`
 .copy-branch-btn-wrapper {
