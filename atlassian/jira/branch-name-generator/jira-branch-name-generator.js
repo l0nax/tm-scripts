@@ -1,15 +1,19 @@
 // ==UserScript==
-// @name         JIRA branch name generator
-// @namespace    http://tampermonkey.net/
-// @version      0.2
-// @match        https://www.fabmation.info/jira/*
-// @require http://code.jquery.com/jquery-latest.js
-// @require https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js
+// @name        JIRA branch name generator
+// @namespace   https://l0nax.io
+// @version     0.2.1
+// @match       https://www.fabmation.info/jira/*
+// @author      Francesco Emanuel Bennici <benniciemanuel78@gmail.com>
+// @require     http://code.jquery.com/jquery-latest.js
+// @require     https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js
 //
 // @updateURL https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
 //
-// @grant          GM_addStyle
+// @updateURL   https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
+// @downloadURL https://raw.githubusercontent.com/l0nax/tm-scripts/master/atlassian/jira/branch-name-generator/jira-branch-name-generator.js
+//
+// @grant       GM_addStyle
 // ==/UserScript==
 
 function GM_addStyle(css) {
