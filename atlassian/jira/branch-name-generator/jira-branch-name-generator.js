@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        JIRA branch name copier
 // @namespace   https://l0nax.io
-// @version     0.3.0
+// @version     0.3.1
 // @match       https://www.fabmation.info/jira/*
 // @author      l0nax
 // @copyright   2020, Francesco Emanuel Bennici <benniciemanuel78@gmail.com>
